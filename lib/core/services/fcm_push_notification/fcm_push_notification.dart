@@ -31,7 +31,7 @@ class FCMPushNotification with DPDisposable {
   static final _backgroundMessage = PublishSubject<RemoteMessage>();
   final onNotification = PublishSubject<RemoteMessage>();
   static final onNotificationBackground = _backgroundMessage;
-  final onTapBannerSubject = PublishSubject<Map<String, dynamic>>();
+  final onTapHeadUpNotificationSubject = PublishSubject<Map<String, dynamic>>();
 
   final _plugin = FlutterLocalNotificationsPlugin();
 
@@ -88,7 +88,7 @@ class FCMPushNotification with DPDisposable {
         };
 
         delegate.onMessageOpenedApp(notificationData, (data) {
-          onTapBannerSubject.add(data);
+          onTapHeadUpNotificationSubject.add(data);
         });
       }
     });
@@ -106,7 +106,7 @@ class FCMPushNotification with DPDisposable {
         };
 
         delegate.onMessageOpenedApp(notificationData, (data) {
-          onTapBannerSubject.add(data);
+          onTapHeadUpNotificationSubject.add(data);
         });
       }
     });
@@ -115,7 +115,7 @@ class FCMPushNotification with DPDisposable {
       if (value != null && value.didNotificationLaunchApp == true) {
         final data = jsonDecode(value.notificationResponse?.payload ?? '');
         delegate.onMessageOpenedApp(data, (data) {
-          onTapBannerSubject.add(data);
+          onTapHeadUpNotificationSubject.add(data);
         });
       }
     });
@@ -221,7 +221,7 @@ class FCMPushNotification with DPDisposable {
       try {
         final data = jsonDecode(response.payload ?? '');
         delegate.onMessageOpenedApp(data, (data) {
-          onTapBannerSubject.add(data);
+          onTapHeadUpNotificationSubject.add(data);
         });
       } finally {}
     });
