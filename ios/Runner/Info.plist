@@ -2,15 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIAppFonts</key>
-	<array>
-		<string>NotoSansJP-Black.ttf</string>
-		<string>NotoSansJP-Bold.ttf</string>
-		<string>NotoSansJP-Light.ttf</string>
-		<string>NotoSansJP-Medium.ttf</string>
-		<string>NotoSansJP-Regular.ttf</string>
-		<string>NotoSansJP-Thin.ttf</string>
-	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -40,16 +31,30 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>PPrivacy - Camera Usage Description</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Privacy - Photo Library Usage Description</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NotoSansJP-Black.ttf</string>
+		<string>NotoSansJP-Bold.ttf</string>
+		<string>NotoSansJP-Light.ttf</string>
+		<string>NotoSansJP-Medium.ttf</string>
+		<string>NotoSansJP-Regular.ttf</string>
+		<string>NotoSansJP-Thin.ttf</string>
+	</array>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Privacy - Photo Library Usage Description</string>
-	<key>NSCameraUsageDescription</key>
-	<string>PPrivacy - Camera Usage Description</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
