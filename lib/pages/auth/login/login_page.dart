@@ -3,8 +3,10 @@ import 'package:awesome_extensions/awesome_extensions_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/core/localization/app_localization.dart';
+import 'package:my_app/core/services/fcm_push_notification/fcm_push_notification.dart';
 import 'package:my_app/core/utils/extensions/string_extensions.dart';
 import 'package:my_app/generated/assets.gen.dart';
+import 'package:my_app/generated/di/di.dart';
 import 'package:my_app/pages/auth/login/bloc/login_bloc.dart';
 import 'package:my_app/pages/auth/login/bloc/login_event.dart';
 import 'package:my_app/pages/auth/login/bloc/login_state.dart';
@@ -33,6 +35,7 @@ class _LoginPageState extends State<LoginPage> with BasePageMixin {
     _bloc.successStream.listen((success) {
       if (success) {
         context.router.replace(const BottomBarRoute());
+        getIt<FCMPushNotification>().generatorToken();
       }
     });
     super.initState();

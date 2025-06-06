@@ -5,7 +5,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: ">=3.2.0 <4.0.0"
   flutter: ">=3.19.0"
 
 dependencies:
@@ -45,6 +45,16 @@ dependencies:
   freezed: 2.4.7
   keyboard_dismisser: 3.0.0
 
+  #Firebase
+  flutter_local_notifications: ^18.0.1
+  firebase_messaging: ^15.1.5
+  firebase_core: ^3.13.1
+  firebase_auth: ^5.5.4
+  firebase_crashlytics: ^4.1.5
+  firebase_analytics: ^11.3.5
+  cloud_firestore: ^5.4.0
+  dartx: ^1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -67,7 +77,6 @@ flutter:
     - assets/fonts/
     - assets/locales/
     - .env
-    
   fonts:
     - family: Noto Sans JP
       fonts:
