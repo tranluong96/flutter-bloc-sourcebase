@@ -4,7 +4,7 @@ import 'package:my_app/routes/router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: "Page,Route")
 @lazySingleton
-class AppRouter extends $AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   RouteType get defaultRouteType =>
       const RouteType.material(); //.cupertino, .adaptive ..etc

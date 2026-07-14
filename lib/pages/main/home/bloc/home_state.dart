@@ -4,7 +4,7 @@ part 'home_state.freezed.dart';
 enum HomeStatus { initial, loading, loaded, update, error }
 
 @freezed
-class HomeState with _$HomeState {
+abstract class HomeState with _$HomeState {
   factory HomeState({
     required HomeStatus status,
     Object? error,

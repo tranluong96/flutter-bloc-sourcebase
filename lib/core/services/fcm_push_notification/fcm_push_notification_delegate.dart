@@ -12,8 +12,8 @@ abstract class FCMPushNotificationDelegate {
 class FCMPushNotificationAction extends FCMPushNotificationDelegate {
   @override
   void onMessageOpenedApp(Map<String, dynamic> data, void Function(Map<String, dynamic>)? headsUpNotification) {
-    final String? notiLocalTitle = data['title'];
-    final String? notiLocalBody = data['body'];
+    // TODO: xử lý khi người dùng mở app từ notification (điều hướng theo `data`).
+    // Ví dụ: headsUpNotification?.call(data);
   }
 
   @override

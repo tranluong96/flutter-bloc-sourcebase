@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/pages/auth/login/bloc/login_bloc.dart';
-import 'package:my_app/pages/auth/login/bloc/login_event.dart' as auth;
-import 'package:my_app/pages/main/count/bloc/count_bloc.dart';
-import 'package:my_app/pages/main/home/bloc/home_bloc.dart';
 import 'package:my_app/pages/template/bloc/template_bloc.dart';
 import 'package:my_app/pages/template/bloc/template_event.dart' as template;
 
+/// Chỉ đặt ở đây những bloc THỰC SỰ cần phạm vi toàn app (dùng chung giữa
+/// nhiều màn hình như một event bus). Các bloc gắn với 1 màn hình phải được
+/// provide tại chính màn hình đó (qua `wrappedRoute`) để state tự được clear
+/// khi màn hình bị dispose.
 class AppBlocProviders extends StatelessWidget {
   final Widget child;
 
@@ -19,12 +19,9 @@ class AppBlocProviders extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HomeBloc()),
-        BlocProvider(create: (context) => CountBloc()),
-        BlocProvider<LoginBloc>(
-            create: (_) => LoginBloc()..add(auth.AppStarted())),
         BlocProvider<TemplateBloc>(
-            create: (_) => TemplateBloc()..add(template.TemplateStarted())),
+          create: (_) => TemplateBloc()..add(template.TemplateStarted()),
+        ),
       ],
       child: child,
     );

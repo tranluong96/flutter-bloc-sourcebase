@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:my_app/core/utils/extensions/string_extensions.dart';
 import 'package:my_app/core/utils/network/app_endpoints.dart';
 import 'package:my_app/core/utils/network/auth_interceptor.dart';
+import 'package:my_app/core/utils/network/global_ui_interceptor.dart';
 import 'package:my_app/core/utils/network/logger_interceptor.dart';
 import 'package:my_app/core/utils/network/rest_client.dart';
 import 'package:my_app/core/utils/session/session.dart';
@@ -16,7 +17,10 @@ final getIt = GetIt.instance;
   initializerName: 'initGetIt',
   asExtension: false,
 )
-void configureDependencies() => initGetIt(getIt);
+// Trả về Future để caller `await` — initGetIt là async (có @preResolve
+// cho SharedPreferences), nếu không await thì các dependency (vd AppRouter)
+// có thể chưa kịp đăng ký khi runApp chạy.
+Future<void> configureDependencies() => initGetIt(getIt);
 
 @module
 abstract class RegisterModule {
@@ -25,6 +29,7 @@ abstract class RegisterModule {
     ..interceptors.addAll([
       // DioCacheManager(CacheConfig()).interceptor,
       AuthInterceptor(getIt<Session>()),
+      GlobalUiInterceptor(),
       if (true) LoggerInterceptor(),
     ]);
 

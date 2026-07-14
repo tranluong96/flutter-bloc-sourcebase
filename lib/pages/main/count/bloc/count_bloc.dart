@@ -28,6 +28,7 @@ class CountBloc extends Cubit<CountState> with DPDisposable {
 
   @override
   Future<void> close() {
+    cancelSubscriptions();
     countChanged.close();
     return super.close();
   }

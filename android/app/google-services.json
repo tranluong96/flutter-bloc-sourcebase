@@ -1,21 +1,40 @@
 {
   "project_info": {
-    "project_number": "334753512243",
-    "project_id": "ansin-dev-test",
-    "storage_bucket": "ansin-dev-test.firebasestorage.app"
+    "project_number": "841731063546",
+    "project_id": "source-base-c3b42",
+    "storage_bucket": "source-base-c3b42.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:334753512243:android:8a76fafbe316f0476adc46",
+        "mobilesdk_app_id": "1:841731063546:android:7c014a4796eb2d90409343",
         "android_client_info": {
-          "package_name": "dipro.app.dev"
+          "package_name": "com.base.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCWDOelP1sWOA-eeZd0y_6rCEnRVE3NUBk"
+          "current_key": "AIzaSyBfjuSsNy5E0dGWdiViqSGA7bYz3La__LQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841731063546:android:2ac0a6f438569f08409343",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfjuSsNy5E0dGWdiViqSGA7bYz3La__LQ"
         }
       ],
       "services": {

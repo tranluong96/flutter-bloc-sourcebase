@@ -7,7 +7,7 @@ abstract class APPEndpoints {
   //AUTH
   static const loginAPI = '/api/v1/client/auth-users/login';
 
-  static const List<String> nonAuthenticatedPaths = [
-    loginAPI,
-  ];
+  static const presignedUrl = '/api/v1/client/files/generate-presigned-url';
+
+  static const List<String> nonAuthenticatedPaths = [loginAPI];
 }

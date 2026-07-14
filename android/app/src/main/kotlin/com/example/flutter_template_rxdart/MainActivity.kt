@@ -1,4 +1,4 @@
-package dipro.app.dev
+package com.base.app
 
 import io.flutter.embedding.android.FlutterActivity
 

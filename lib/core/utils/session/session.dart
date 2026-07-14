@@ -1,6 +1,7 @@
 // Define a Settings model class
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:my_app/core/singletons/data_service_mgmt.dart';
 import 'package:my_app/core/utils/session/my_shared_preferences.dart';
 import 'package:my_app/models/auth/user_model.dart';
 
@@ -35,6 +36,8 @@ class Session extends SessionProtocol {
   @override
   void logout() {
     _mySharedPreferences.clearAll();
+    // Reset dữ liệu in-memory dùng chung để không rớt sang phiên/người dùng sau.
+    DataServiceMgmt.instance.clearAllData();
   }
 
   @override
@@ -64,5 +67,6 @@ class Session extends SessionProtocol {
 
   Future<void> clearAll() async {
     await _mySharedPreferences.clearAll();
+    DataServiceMgmt.instance.clearAllData();
   }
 }

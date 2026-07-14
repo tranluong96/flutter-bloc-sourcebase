@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:my_app/core/utils/extensions/modal_extensions.dart';
+import 'package:my_app/core/utils/helpers/logger_helper/logger_helper.dart';
 import 'package:my_app/generated/di/di.dart';
 import 'package:my_app/pages/base/base_page_mixin.dart';
 import 'package:my_app/pages/main/count/bloc/count_state.dart';
@@ -27,6 +30,7 @@ class CountPage extends StatefulWidget implements AutoRouteWrapper {
 
 class _CountPageState extends State<CountPage> with BasePageMixin {
   CountBloc get _bloc => context.read<CountBloc>();
+  StreamSubscription<void>? _countChangedSub;
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +47,17 @@ class _CountPageState extends State<CountPage> with BasePageMixin {
   @override
   void initState() {
     super.initState();
-    _bloc.countChanged.listen((_) {
-      print("countChanged");
+    _countChangedSub = _bloc.countChanged.listen((_) {
+      if (!mounted) return;
+      getIt<LoggerHelper>().debug("countChanged");
       context.read<TemplateBloc>().add(TemplateEventActive(true));
     });
+  }
+
+  @override
+  void dispose() {
+    _countChangedSub?.cancel();
+    super.dispose();
   }
 
   void _showAlertDialog(BuildContext context) async {

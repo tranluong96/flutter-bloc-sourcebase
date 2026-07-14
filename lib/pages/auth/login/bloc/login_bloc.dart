@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/core/utils/extensions/stream_extensions.dart';
 import 'package:my_app/core/utils/helpers/dp_disposable.dart';
+import 'package:my_app/core/utils/helpers/logger_helper/logger_helper.dart';
 import 'package:my_app/core/utils/validators/validators.dart';
 import 'package:my_app/generated/di/di.dart';
 import 'package:my_app/pages/auth/login/bloc/login_event.dart';
@@ -11,18 +12,19 @@ import 'package:rxdart/rxdart.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> with DPDisposable {
   final formKey = GlobalKey<FormState>();
   final _validatorHelp = getIt<AppValidators>();
+  final _logger = getIt<LoggerHelper>();
   final _loginStream = PublishSubject<LoginState>();
   final successStream = BehaviorSubject<bool>.seeded(false);
 
   LoginBloc() : super(LoginState.initial()) {
     _loginStream
         .doOnData((state) {
-          print("state: ${state.email} ${state.password}");
+          _logger.debug("state: ${state.email} ${state.password}");
         })
         .asyncMap((convert) => {})
         .doOnData((onData) => {})
         .doOnError((error, stackTrace) {
-          print("error: $error");
+          _logger.error("error: $error");
         })
         .map((state) => true)
         .bindTo(successStream)
@@ -77,5 +79,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with DPDisposable {
         add(LoginSubmitted(state.email, state.password));
       }
     });
+  }
+
+  @override
+  Future<void> close() {
+    cancelSubscriptions();
+    _loginStream.close();
+    successStream.close();
+    return super.close();
   }
 }

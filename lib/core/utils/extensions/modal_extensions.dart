@@ -11,9 +11,12 @@ extension ModalExtension on BuildContext {
       context: this,
       barrierDismissible: false,
       barrierColor: Colors.transparent,
-      builder: (context) => const AlertDialog(
-        backgroundColor: Colors.transparent,
-        content: LoadingWidget(),
+      builder: (context) => const PopScope(
+        canPop: false,
+        child: AlertDialog(
+          backgroundColor: Colors.transparent,
+          content: LoadingWidget(),
+        ),
       ),
     );
   }

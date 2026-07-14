@@ -13,7 +13,9 @@ import 'package:http/http.dart' as http;
 import 'package:injectable/injectable.dart';
 import 'package:my_app/core/services/fcm_push_notification/fcm_push_notification_delegate.dart';
 import 'package:my_app/core/utils/helpers/dp_disposable.dart';
+import 'package:my_app/core/utils/helpers/logger_helper/logger_helper.dart';
 import 'package:my_app/firebase_options.dart';
+import 'package:my_app/generated/di/di.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -66,6 +68,7 @@ class FCMPushNotification with DPDisposable {
 
   void generatorToken() async {
     final token = await getDeviceToken() ?? '';
+    getIt<LoggerHelper>().debug('Devicetoken: $token');
     delegate.onTokenRefresh(token);
   }
 
@@ -73,7 +76,9 @@ class FCMPushNotification with DPDisposable {
     try {
       final token = await getDeviceToken() ?? '';
       delegate.onTokenRefresh(token);
-    } catch (exception) {}
+    } catch (exception) {
+      getIt<LoggerHelper>().error('FCM refresh token error: $exception');
+    }
   }
 
   void _setupHandler() {
@@ -172,10 +177,10 @@ class FCMPushNotification with DPDisposable {
       'body': message.notification?.body ?? '',
     };
     await _plugin.show(
-      notification.hashCode,
-      notification.title,
-      notification.body,
-      NotificationDetails(
+      id: notification.hashCode,
+      title: notification.title,
+      body: notification.body,
+      notificationDetails: NotificationDetails(
         android: androidNotificationDetails,
         iOS: DarwinNotificationDetails(
           presentAlert: true,
@@ -217,7 +222,7 @@ class FCMPushNotification with DPDisposable {
       iOS: iosSettings,
     );
 
-    await _plugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (response) {
+    await _plugin.initialize(settings: initializationSettings, onDidReceiveNotificationResponse: (response) {
       try {
         final data = jsonDecode(response.payload ?? '');
         delegate.onMessageOpenedApp(data, (data) {

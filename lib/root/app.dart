@@ -1,13 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
-import 'package:my_app/core/bloc/app_bloc_providers.dart';
+import 'package:my_app/core/blocs/app_bloc_providers.dart';
 import 'package:my_app/core/resources/res.dart';
+import 'package:my_app/core/shared/global_overlay/global_overlay_host.dart';
 import 'package:my_app/core/utils/configs/enum.dart';
 import 'package:my_app/generated/di/di.dart';
+import 'package:my_app/i18n/strings.g.dart';
 import 'package:my_app/routes/router.dart';
-import 'package:my_app/core/localization/language_provider.dart';
-import 'package:provider/provider.dart';
 
 class App extends StatelessWidget {
   const App({super.key, required this.flavor});
@@ -22,37 +22,31 @@ class App extends StatelessWidget {
         ? '[D]MyApp'
         : 'MyApp';
 
-    return ChangeNotifierProvider(
-      create: (_) => LanguageProvider(),
-      child: Consumer<LanguageProvider>(
-        builder: (context, languageProvider, child) {
-          languageProvider.initialize(context);
-
-          return AppBlocProviders(
-            child: KeyboardDismisser(
-              gestures: const [GestureType.onTap],
-              child: MaterialApp.router(
-                localizationsDelegates: context.localizationDelegates,
-                supportedLocales: context.supportedLocales,
-                locale: languageProvider.currentLocale,
-                title: appName,
-                theme: ThemeData(
-                  // Color common app white
-                  scaffoldBackgroundColor: ResColors().white,
-                  fontFamily: "Noto Sans JP",
-                  primarySwatch: Colors.blue,
-                  primaryColor: Colors.blue,
-                  textButtonTheme: _textButtonTheme(context),
-                  outlinedButtonTheme: _outlineTextButtonTheme(context),
-                  inputDecorationTheme: _inputDecorationTheme(context),
-                  elevatedButtonTheme: _elevatedButtonTheme(context),
-                ),
-                routerConfig: appRouter.config(),
-                builder: (context, child) => child!,
-              ),
-            ),
-          );
-        },
+    return AppBlocProviders(
+      child: KeyboardDismisser(
+        gestures: const [GestureType.onTap],
+        child: MaterialApp.router(
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
+          supportedLocales: AppLocaleUtils.supportedLocales,
+          // Đồng bộ locale của Flutter theo slang; rebuild khi đổi ngôn ngữ.
+          locale: TranslationProvider.of(context).flutterLocale,
+          title: appName,
+          theme: ThemeData(
+            // Color common app white
+            scaffoldBackgroundColor: ResColors().white,
+            fontFamily: "Noto Sans JP",
+            primarySwatch: Colors.blue,
+            primaryColor: Colors.blue,
+            textButtonTheme: _textButtonTheme(context),
+            outlinedButtonTheme: _outlineTextButtonTheme(context),
+            inputDecorationTheme: _inputDecorationTheme(context),
+            elevatedButtonTheme: _elevatedButtonTheme(context),
+          ),
+          routerConfig: appRouter.config(),
+          // Host loading + toast toàn cục, nằm trên mọi màn hình.
+          builder: (context, child) =>
+              GlobalOverlayHost(child: child ?? const SizedBox.shrink()),
+        ),
       ),
     );
   }

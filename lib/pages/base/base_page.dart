@@ -9,7 +9,7 @@ abstract class BasePage<ViewModel extends BaseViewModel>
   const BasePage({Key? key, required this.viewModel}) : super(key: key);
 }
 
-abstract class BasePageState<Page extends BasePage> extends State<Page>
+abstract class BasePageState<T extends BasePage> extends State<T>
     with BasePageMixin, DPDisposable {
   @override
   void initState() {

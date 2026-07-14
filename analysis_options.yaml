@@ -6,8 +6,11 @@ analyzer:
   exclude:
     - lib/generated/
     - lib/core/utils/network/rest_client.g.dart
+    - build/**
+    - android/**
+    - ios/**
   errors:
-    avoid_print: ignore error
+    avoid_print: warning
     prefer_single_quotes: warning
     empty_statements: error
     hash_and_equals: error

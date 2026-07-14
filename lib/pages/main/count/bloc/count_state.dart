@@ -4,7 +4,7 @@ part 'count_state.freezed.dart';
 enum CountStatus { initial, loading, success, error }
 
 @freezed
-class CountState with _$CountState {
+abstract class CountState with _$CountState {
   factory CountState({
     required CountStatus status,
     required int count,
